@@ -49,9 +49,12 @@ export const getAllCategories = asyncHandler(async(req,res) => {
 export const getCategory = asyncHandler(async(req,res) => {
   try {
     const category = await prisma.category.findUnique({
-      where: req.params
+      where: req.params,
+      include: {
+        posts: true
+      }
     })
-
+    
     if (category) {
       res.json(category)
     } else {
@@ -92,3 +95,17 @@ export const updateCategory = asyncHandler(async(req,res) => {
 // @desc     delete  category
 // @route    DELETE category
 // @access  Private
+export const deleteCategory = asyncHandler(async(req, res) => {
+  try {
+    const category = await prisma.category.delete({
+      where: {
+        name: req.params.name
+      }
+    })
+
+    res.json("Category Has been deleted successfully")
+  } catch (err) {
+    res.status(404)
+    throw new Error("Category not found")
+  }
+})

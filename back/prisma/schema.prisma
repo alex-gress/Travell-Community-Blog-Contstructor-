@@ -41,9 +41,7 @@ model Post {
   slug                     String                 @unique
   text                     String
 
-  filenameImage     String
-  mimetypeImage    String
-  dataImage              Bytes
+  image                  String
 
   category              Category?          @relation(fields: [categoryId], references: [id])
   categoryId           Int?
