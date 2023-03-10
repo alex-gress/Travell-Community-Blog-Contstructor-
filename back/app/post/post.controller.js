@@ -5,7 +5,7 @@ import { prisma } from './../prisma.js';
 // @route    POST posts
 // @access  Private
 export const createNewPost = asyncHandler(async(req,res) => {
-  const {title, text, category} = req.body;
+  const {title, text, categoryIds} = req.body;
 
   let slug = title.toLowerCase();
   let new_slug = ''
@@ -35,7 +35,9 @@ export const createNewPost = asyncHandler(async(req,res) => {
       slug: new_slug,
       user: req.user.id,
       text,
-      category
+      categories: {
+        connect: categoryIds.map(id => ({id: +id}))
+      }
     }
   })
 
@@ -46,7 +48,11 @@ export const createNewPost = asyncHandler(async(req,res) => {
 // @route    GET posts
 // @access  Public
 export const AllPosts = asyncHandler(async(req,res) => {
-  const posts = await prisma.post.findMany()
+  const posts = await prisma.post.findMany({
+    include: {
+      categories: true
+    }
+  })
 
   res.json(posts)
 })

@@ -11,6 +11,9 @@ export const profileUser = asyncHandler(async(req,res) => {
       where: {
         name: req.params.name
       },
+      include: {
+        posts: true
+      },
       select: userProfileFields,
     })
   

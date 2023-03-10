@@ -1,0 +1,23 @@
+@import '../../assets/scss/variables';
+
+.podHeader {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+   padding: 0 3vw;
+   &__menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      a {
+         color: $white;
+         font-size: 16px;
+         transition: all .3s linear;
+         &:hover {
+            color: $red;
+         }
+      }
+   }
+}
